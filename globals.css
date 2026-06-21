@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background:
+    radial-gradient(900px 600px at 80% -10%, rgba(139, 92, 246, 0.12), transparent 60%),
+    radial-gradient(700px 500px at -10% 10%, rgba(56, 189, 248, 0.08), transparent 55%),
+    #060912;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.6);
+  outline-offset: 2px;
+}
+
+@keyframes savaFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes savaDrawerIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+@keyframes savaDrawerInRtl { from { transform: translateX(100%); } to { transform: translateX(0); } }
+.sava-backdrop { animation: savaFade 0.2s ease-out; }
+.sava-drawer { animation: savaDrawerIn 0.22s ease-out; }
+[dir="rtl"] .sava-drawer { animation: savaDrawerInRtl 0.22s ease-out; }
