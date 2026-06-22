@@ -16,13 +16,19 @@ import { useI18n } from "@/components/I18nProvider";
 const input =
   "w-full rounded-lg border border-white/15 bg-white/10 px-3 py-2.5 text-white placeholder-slate-300 outline-none focus:border-violet-400";
 
-export default function SubjectsManager({ initial }: { initial: Subject[] }) {
+export default function SubjectsManager({
+  initial,
+  lockedDept,
+}: {
+  initial: Subject[];
+  lockedDept: string | null;
+}) {
   const router = useRouter();
   const { t } = useI18n();
   const [subjects, setSubjects] = useState<Subject[]>(initial);
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  const [dept, setDept] = useState<string>(DEPARTMENTS[0]);
+  const [dept, setDept] = useState<string>(lockedDept ?? DEPARTMENTS[0]);
   const [year, setYear] = useState("1");
   const [weights, setWeights] = useState<ExamWeights>({ ...DEFAULT_WEIGHTS });
   const [err, setErr] = useState("");
@@ -83,11 +89,15 @@ export default function SubjectsManager({ initial }: { initial: Subject[] }) {
             }}
           />
           <div className="grid grid-cols-2 gap-3">
-            <select className={input} value={dept} onChange={(e) => setDept(e.target.value)}>
-              {DEPARTMENTS.map((d) => (
-                <option key={d} value={d} className="bg-slate-900">{d}</option>
-              ))}
-            </select>
+            {lockedDept ? (
+              <div className={input + " flex items-center font-medium"}>{lockedDept}</div>
+            ) : (
+              <select className={input} value={dept} onChange={(e) => setDept(e.target.value)}>
+                {DEPARTMENTS.map((d) => (
+                  <option key={d} value={d} className="bg-slate-900">{d}</option>
+                ))}
+              </select>
+            )}
             <select className={input} value={year} onChange={(e) => setYear(e.target.value)}>
               <option value="1" className="bg-slate-900">{t("signup.year1")}</option>
               <option value="2" className="bg-slate-900">{t("signup.year2")}</option>
